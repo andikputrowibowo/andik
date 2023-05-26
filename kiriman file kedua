@@ -1,0 +1,340 @@
+# install dan load library
+
+## load tidyverse
+library("tidyverse")
+## load ggpubr
+#install.packages("ggpubr")
+library("ggpubr")
+## load GGally
+#install.packages("GGally")
+library("GGally")
+## load esquisse
+#install.packages("esquisse")
+library("esquisse")
+
+# Membaca Data dan Strukturnya
+
+## Membaca data dari link
+#raw_data_1 <- read_csv(file = "https://raw.githubusercontent.com/hadimaster65555/dataset_for_teaching/main/dataset/hr_analytics_turnover_dataset/HR_comma_sep.csv")
+## lihat nilai dari raw_data_1
+#raw_data_1
+
+## membaca data dari dalam project
+raw_data_1 <- read_csv(file = "E:/1.GIRDA OKY PILLARJATI/KERJA/DISDIKAL/2. Proyek Artificial Intelegence/2.Pelatihan Software Enginering/Modul 4/Materi/HR_comma_sep.csv")
+## lihat nilai dari raw_data_2
+raw_data_1
+
+## melihat 5 data pertama dari raw_data_1
+head(raw_data_1)
+## melihat 5 data terakhir dari raw_data_1
+tail(raw_data_1)
+## melihat tabel dari raw_data_1
+view(raw_data_1)
+
+## melihat dimensi dari raw_data_1
+dim(raw_data_1)
+## melihat jumlah baris dari raw_data_1
+nrow(raw_data_1)
+## melihat jumlah kolom dari raw_data_1
+ncol(raw_data_1)
+## melihat nama-nama kolom dari raw_data_1
+names(raw_data_1) 
+## melihat nama-nama baris dari raw_data_1
+rownames(raw_data_1)
+## melihat struktur dari raw_data_1
+str(raw_data_1)
+## melihat struktur data dari raw_data_1 lebih ringkas
+glimpse(raw_data_1)
+## melihat summary statistics dari raw_data_1
+summary(raw_data_1)
+
+# Indexing dan subsetting dataframe
+
+## sintaks: nama_dataframe[indeks_baris, indeks_kolom]
+
+## mengambil baris 1 kolom 1 dari raw_data_1
+raw_data_1[1, 1]
+
+## mengambil baris 1 kolom 6 dari raw_data_1
+raw_data_1[1, 6]
+
+## mengambil semua data di baris 1 dari raw_data_1
+raw_data_1[1, ]
+
+## mengambil semua data di kolom 1 dari raw_data_1
+raw_data_1[, 1]
+
+# mengambil kolom 1 dari raw_data_1
+raw_data_1[1]
+
+# mengambil baris 1,2, dan 3 dan kolom 5 dan 6 dari raw_data_1
+raw_data_1[c(1, 2, 3), c(5, 6)]
+
+# mengambil baris 1,2, dan 3 dan kolom 5 dan 6 dari raw_data_1
+raw_data_1[1:3, 5:6]
+
+## ambil baris 1 sampai 6 dari raw_data_1 lalu masukkan ke head_raw_data_1
+head_raw_data_1 <- raw_data_1[1:6, ]
+## cek nilai dari head_raw_data_1
+head_raw_data_1
+
+## ambil semua kolom kecuali kolom pertama dari raw_data_1
+raw_data_1[, -1]
+## ambil semua baris kecuali baris pertama dari raw_data_1
+raw_data_1[-1, ]
+
+## mengambil kolom satisfaction_level dari raw_data_1 cara 1
+raw_data_1["satisfaction_level"]
+## mengambil kolom satisfaction_level dari raw_data_1 cara 2
+raw_data_1[, "satisfaction_level"]
+## mengambil kolom satisfaction_level dari raw_data_1 cara 3
+raw_data_1$satisfaction_level
+
+
+# Latihan
+
+# 1. buatlah variabel berisi 200 data pertama dari raw_data_1
+#Jawaban :
+head_raw_data_2 <- raw_data_1[1:200, ]
+head_raw_data_2 
+
+
+# 2. perhatikan bahwa nrow() memberikan nilai jumlah baris pada data
+# gunakanlah informasi ini untuk mengambil nilai terakhir dari raw_data_1
+#Jawaban :
+raw_data_1[nrow(raw_data_1), ]
+
+# 3. gunakan nrow() untuk mengambil data yang letaknya di tengah dari raw_data_1
+#Jawaban :
+raw_data_1[as.integer(nrow(raw_data_1)/2),]
+
+
+# Factor
+
+## cek kembali struktur data dari raw_data_1
+glimpse(raw_data_1)
+
+## mengubah tipe data kolom sales menjadi factor
+raw_data_1$sales <- factor(raw_data_1$sales)
+## cek kembali struktur data dari raw_data_1
+glimpse(raw_data_1)
+## cek summary dari raw_data_1 kolom sales
+summary(raw_data_1$sales)
+
+## mengubah tipe data kolom salary menjadi factor
+raw_data_1$salary <- factor(raw_data_1$salary)
+## cek kembali struktur data dari raw_data_1
+glimpse(raw_data_1)
+## cek struktur data dari raw_data_1 kolom salary
+str(raw_data_1$salary)
+## memberikan urutan/level pada kolom salary
+raw_data_1$salary <- factor(raw_data_1$salary, levels = c("low", "medium", "high"))
+## cek struktur data dari raw_data_1 kolom salary
+str(raw_data_1$salary)
+view(raw_data_1)
+
+# Latihan
+
+## ubah kolom berikut menjadi bertipe factor
+## 1. Work_accident
+###Jawaban:
+raw_data_1$Work_accident <- factor(raw_data_1$Work_accident)
+glimpse(raw_data_1)
+str(raw_data_1$Work_accident)
+summary(raw_data_1$Work_accident)
+
+## 2. left
+###Jawaban:
+raw_data_1$left <- factor(raw_data_1$left)
+glimpse(raw_data_1)
+str(raw_data_1$left)
+summary(raw_data_1$left)
+
+## 3. promotion_last_5years
+###Jawaban:
+raw_data_1$promotion_last_5years <- factor(raw_data_1$promotion_last_5years)
+glimpse(raw_data_1)
+str(raw_data_1$promotion_last_5years)
+summary(raw_data_1$promotion_last_5years)
+
+# Manipulasi Data Menggunakan tidyverse
+
+## Memilih dan memfilter kolom 
+
+## memilih kolom satisfaction_level dan last_evaluation dari raw_data_1
+select(raw_data_1, satisfaction_level, last_evaluation)
+## memilih semua kolom kecuali satisfaction_level
+select(raw_data_1, -satisfaction_level)
+## memilih baris data dimana satisfaction_level > 0.8
+filter(raw_data_1, satisfaction_level > 0.8)
+view(filter(raw_data_1, satisfaction_level > 0.8))
+
+MU <- filter(raw_data_1, salary == "high")
+GajiDanNilaiKepuasan <- select(MU, satisfaction_level, salary)
+view(GajiDanNilaiKepuasan)
+
+##hasilnya sama dengan dibawah
+
+GajiDanNilaiKepuasan <- raw_data_1 %>%
+  filter(salary == "high") %>%
+  select(satisfaction_level, salary)
+view(GajiDanNilaiKepuasan)
+
+# Pipes
+
+## pilih baris dari raw_data_1 dimana satisfaction_level <= 50
+## lalu masukkan ke df_1
+df_1 <- filter(raw_data_1, satisfaction_level <= 50)
+## pilih kolom satisfaction_level, last_evaluation, dan sales dari df_1
+## lalu masukkan ke df_2
+df_2 <- select(df_1, satisfaction_level, last_evaluation, sales)
+
+## lakukan hal yang sama dengan yang di atas menggunakan beberapa fungsi sekaligus
+df_3 <- select(filter(raw_data_1, satisfaction_level <= 50), satisfaction_level, last_evaluation, sales)
+
+## lakukan hal yang sama dengan yang di atas
+## dari raw_data_1
+raw_data_1 %>% 
+  ## filter baris dimana satisfaction_level <= 50
+  filter(satisfaction_level <= 50) %>% 
+  ## pilih kolom satisfaction_level, last_evaluation, dan sales
+  select(satisfaction_level, last_evaluation, sales)
+
+
+## dari raw_data_1 yang nilainya akan dimasukkan ke df_4
+df_4 <- raw_data_1 %>% 
+  ## filter baris dimana satisfaction_level <= 50
+  filter(satisfaction_level <= 50) %>% 
+  ## pilih kolom satisfaction_level, last_evaluation, dan sales
+  select(satisfaction_level, last_evaluation, sales)
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## filter baris dimana satisfaction_level <= 50
+  filter(satisfaction_level <= 50) %>% 
+  ## pilih kolom satisfaction_level, last_evaluation, dan sales
+  ## lalu masukkan nilainya ke variabel df_4
+  select(satisfaction_level, last_evaluation, sales) -> df_4
+
+# Latihan
+
+## Lakukanlah operasi berikut
+
+## 1. Dari raw_data_1, pilih kolom last_evaluation, sales, dan salary, lalu filter sales == "IT"
+
+## 2. Dari raw_data_1, filter baris data dimana salary "low" dan "medium" lalu pilih kolom sales,
+## satisfaction_level, dan work_accident
+
+# Mutate
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## transformasi satisfaction_level dengan cara satisfaction_level * 100
+  mutate(satisfaction_level = satisfaction_level * 100)
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## transformasi kolom-kolom berikut
+  mutate(
+    ## satisfaction_level dengan cara satisfaction_level * 100
+    satisfaction_level = satisfaction_level * 100,
+    ## last_evaluation dengan cara last_evaluation * 100
+    last_evaluation = last_evaluation * 100
+  )
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## transformasi satisfaction_level dengan cara satisfaction_level * 100
+  mutate(satisfaction_level = satisfaction_level * 100) %>% 
+  ## filter baris data dimana satisfaction_level > 80
+  filter(satisfaction_level > 80)
+
+# Urutkan Data
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## susun data berdasarkan kolom satisfaction_level secara ascending
+  arrange(satisfaction_level)
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## susun data berdasarkan kolom satisfaction_level secara descending
+  arrange(desc(satisfaction_level))
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## susun data berdasarkan kolom satisfaction_level secara ascending
+  ## dan kolom last_evaluation secara descending
+  arrange(satisfaction_level, desc(last_evaluation))
+
+# Latihan
+
+## lakukan operasi berikut
+## dari raw_data_1, pilih satisfaction_level, sales, salary, dan left
+## lalu transformasi kolom last_evaluation dengan cara last_evaluation * 100
+## lalu filter baris data berdasarkan raw_data_1 >= 50
+
+# Group By dan Summarize
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## kelompokkan data berdasarkan salary
+  group_by(salary) %>% 
+  ## cari nilai rata-rata dari average_monthly_hours dengan nama mean_hours
+  summarize(mean_hours = mean(average_montly_hours))
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## kelompokkan data berdasarkan salary dan sales
+  group_by(salary, sales) %>% 
+  ## cari nilai rata-rata dari average_monthly_hours dengan nama mean_hours
+  summarize(mean_hours = mean(average_montly_hours))
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## kelompokkan data berdasarkan salary
+  group_by(salary) %>% 
+  ## cari summary dari
+  summarize(
+    ## rata-rata average_monthly_hours
+    mean_hours = mean(average_montly_hours),
+    ## median dari satisfaction_level
+    median_satisfaction_level = median(satisfaction_level)
+  )
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## kelompokkan data berdasarkan salary
+  group_by(salary) %>% 
+  ## hitung jumlah data dari tiap kelompok
+  count()
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## kelompokkan data berdasarkan salary
+  group_by(salary) %>% 
+  ## hitung jumlah data dari tiap kelompok
+  summarize(
+    total = n()
+  )
+
+# Latihan
+
+## lakukan operasi berikut
+## dari raw_data_1, kelompokkan data berdasarkan left dan salary
+## lalu cari summary dari:
+## 1. median dari number_project, beri nama med_num
+## 2. mean dari satisfaction_level, beri nama mean_satis
+## 3. median dari average_monthly_hours, beri nama med_amh
+## 4. urutkan berdasarkan med_amh secara descending
+
+# Menyimpan data
+
+## dari raw_data_1
+raw_data_1 %>% 
+  ## filter baris data berdasarkan satisfaction_level <= 50 dan salary "low" dan "medium"
+  filter(satisfaction_level <= 50, salary %in% c("low", "medium")) %>% 
+  ## simpan ke dalam project dengan nama "emp_satisfaction_level_less50.csv"
+  write_csv(file = "emp_satisfaction_level_less50.csv")
+
+
