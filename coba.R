@@ -1,1 +1,1 @@
-#percobaan pertama push
+print(hello)
